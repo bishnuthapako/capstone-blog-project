@@ -7,7 +7,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 
 
-function NavBar() {
+function NavBar({user}) {
 
 
   return (
@@ -33,8 +33,8 @@ function NavBar() {
             navbarScroll
           >
             {/* <Nav.Link as={Link} to="/">Home</Nav.Link> */}
-            <Nav.Link as={Link} to="/signup" className="fw-bold fs-5">Create account</Nav.Link>
-            <Nav.Link as={Link} to="/login" className="fw-bold fs-5">Login</Nav.Link>
+          {user ? null : <Nav.Link as={Link} to="/signup" className="fw-bold fs-5">Create account</Nav.Link>}
+            {user ? <Button bg-light>Create Post</Button> : <Nav.Link as={Link} to="/login" className="fw-bold fs-5">Login</Nav.Link>}
           </Nav>
          
         </Navbar.Collapse>

@@ -9,7 +9,7 @@ import Home from './Pages/Home';
 
 function App() {
 
-  // const [user, setUser]=useState(null)
+  const [user, setUser]=useState(null)
 
   // useEffect(()=>{
   //   fetch("/me")
@@ -31,7 +31,7 @@ function App() {
                 <Route path="/login" element={<Login />} />
           </Routes> */}
   <div className="container bg-light vh-100">
-  <NavBar />
+  <NavBar user={user}/>
 
    <div className="row">
             <div className="container-fluid col-3 vh-100">
@@ -44,7 +44,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/signup" element={<SignUp />} /> 
-                <Route path="/login" element={<Login />} />
+                <Route path="/login" element={<Login setUser={setUser}/>} />
           </Routes>
             </div>
               
