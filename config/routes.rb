@@ -7,11 +7,12 @@ Rails.application.routes.draw do
   resources :tags, only: [:index, :create, :show]
   resources :comments, only: [:index, :create, :update, :destroy]
   resources :posts, only: [:index, :create, :show, :update, :destroy]
+  resources :members_only_posts, only: [:index, :show]
 
-   post "/login", to: "sessions#create"
-  delete "/logout", to: "sessions#destroy"
+    post "/login", to: "sessions#create"
+    delete "/logout", to: "sessions#destroy"
 
-  post "/signup", to: "users#create"
-  get "/me", to: "users#show"
+    post "/signup", to: "users#create"
+    get "/me", to: "users#show"
   
 end

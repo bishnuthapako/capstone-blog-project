@@ -1,9 +1,20 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 function Home() {
+  const [articles, setArticles]=useState([])
+  console.log(articles, 'art')
+  useEffect(()=>{
+    fetch("/posts")
+    .then((res)=>res.json())
+    .then((data)=>{
+      // console.log(data, 'data')
+      setArticles(data)})
+  },[])
+
+
   return (
-    <div><h1>Welcome to the Home Page</h1></div>
     
+    <h13>hello</h13>
   )
 }
 

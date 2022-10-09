@@ -43,7 +43,7 @@ function App() {
             {/* <h1>Welcome to my right sidebar section. Welcome to my sidebar section</h1> */}
             <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/signup" element={<SignUp />} /> 
+                <Route path="/signup" element={<SignUp setUser={setUser}/>} /> 
                 <Route path="/login" element={<Login setUser={setUser}/>} />
           </Routes>
             </div>

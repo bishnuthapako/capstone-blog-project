@@ -29,7 +29,7 @@ async function handleSubmitForm(e){
 
   const res = await fetch("/login", config)
   const data = await res.json()
-  console.log(data, 'data')
+  // console.log(data, 'data')
   setUser(data)
  navigate("/")
  }
