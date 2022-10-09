@@ -36,7 +36,7 @@ function App() {
    <div className="row">
             <div className="container-fluid col-3 vh-100">
 
-            <h1>Welcome to my right sidebar section. Welcome to my sidebar section</h1>
+            {/* <h3>Welcome to my right sidebar section. Welcome to my sidebar section</h3> */}
             </div>
             
             <div className="container-fluid col-6 vh-100"> 
@@ -49,7 +49,7 @@ function App() {
             </div>
               
             <div className="container-fluid col-3 vh-100">
-              <h1>Welcome to my right sidebar section. Welcome to my sidebar section</h1>
+              {/* <h3>Welcome to my right sidebar section. Welcome to my sidebar section</h3> */}
 
             </div>
     </div>

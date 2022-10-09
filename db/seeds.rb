@@ -28,12 +28,14 @@ u2 = User.create(
 p1 = Post.create(
     user_id: u1.id,
     title: "How To Write Optimized Articles With Minimum Efforts",
-    content: "Welcome guys, I am going to show you how to write SEO optimized articles on google docs using SEO Writing Assistant which helps to write SEO friendly contents even on digital marketing. Google will love and chances to rank on the first page."
+    content: "Welcome guys, I am going to show you how to write SEO optimized articles on google docs using SEO Writing Assistant which helps to write SEO friendly contents even on digital marketing. Google will love and chances to rank on the first page.",
+    minutes_to_read: 8
 )
 p2 = Post.create(
     user_id: u2.id,
     title: "How To Write Optimized Articles With Minimum Efforts",
-    content: "Welcome guys, I am going to show you how to write SEO optimized articles on google docs using SEO Writing Assistant which helps to write SEO friendly contents even on digital marketing. Google will love and chances to rank on the first page."
+    content: "Welcome guys, I am going to show you how to write SEO optimized articles on google docs using SEO Writing Assistant which helps to write SEO friendly contents even on digital marketing. Google will love and chances to rank on the first page.",
+    minutes_to_read: 10
 )
 
 c1 = Comment.create(
@@ -57,6 +59,9 @@ t2 = Tag.create(
 
 p1.tags << t1
 p2.tags << t2
+
+
+
 
 
 

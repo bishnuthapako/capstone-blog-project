@@ -1,3 +1,3 @@
 class PostListSerializer < ActiveModel::Serializer
-  attributes :id, :title, :author, :preview, :date
+  attributes :id, :title, :minutes_to_read, :author, :preview, :date
 end
