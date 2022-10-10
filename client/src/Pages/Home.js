@@ -3,7 +3,7 @@ import PostItem from './PostItem'
 
 function Home() {
   const [posts, setPosts]=useState([])
-  // console.log(posts, 'art')
+  console.log(posts, 'art')
   useEffect(()=>{
     fetch("/posts")
     .then((res)=>res.json())
@@ -14,16 +14,12 @@ function Home() {
 
 
   return (
-
     <main>
-      {
-        posts.map((post)=>(
-
-          <PostItem key={post.id} post={post} />
-        ))}
+      {posts.map((post)=>(<PostItem key={post.id} post={post} />)
+    )}
     </main>
-    
-  )
+  
+);
 }
 
 export default Home

@@ -7,7 +7,13 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 
 
-function NavBar({user}) {
+function NavBar({user, onLogOut}) {
+
+  function handleLogOut(){
+    fetch("/logout", {
+      method: "DELETE",
+    }).then(()=>onLogOut())
+  }
 
 
   return (
@@ -34,7 +40,8 @@ function NavBar({user}) {
           >
             {/* <Nav.Link as={Link} to="/">Home</Nav.Link> */}
           {user ? null : <Nav.Link as={Link} to="/signup" className="fw-bold fs-5">Create account</Nav.Link>}
-            {user ? <Button bg-light>Create Post</Button> : <Nav.Link as={Link} to="/login" className="fw-bold fs-5">Login</Nav.Link>}
+            {user ? 
+            <Button onClick={handleLogOut} bg-light>Sign Out</Button> : <Nav.Link as={Link} to="/login" className="fw-bold fs-5">Login</Nav.Link>}
           </Nav>
          
         </Navbar.Collapse>

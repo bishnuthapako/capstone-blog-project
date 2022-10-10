@@ -10,17 +10,25 @@ import Home from './Pages/Home';
 function App() {
 
   const [user, setUser]=useState(null)
+console.log(user, 'user')
+  useEffect(()=>{
+    fetch("/me")
+    .then((r)=>{
+      if(r.ok){
+        r.json()
+        .then((user)=>setUser(user))
+        // console.log(user, "user")
+      }
+    });
+  },[]);
 
-  // useEffect(()=>{
-  //   fetch("/me")
-  //   .then((r)=>{
-  //     if(r.ok){
-  //       r.json()
-  //       .then((user)=>setUser(user))
-  //       // console.log(user, "user")
-  //     }
-  //   });
-  // },[]);
+function handleLogin(user){
+  setUser(user)
+}
+
+function handleLogout(){
+  setUser(null);
+}
 
   return (
     <>
@@ -31,7 +39,7 @@ function App() {
                 <Route path="/login" element={<Login />} />
           </Routes> */}
   <div className="container bg-light vh-100">
-  <NavBar user={user}/>
+  <NavBar user={user} onLogOut={handleLogout}/>
 
    <div className="row">
             <div className="container-fluid col-3 vh-100">
@@ -44,7 +52,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/signup" element={<SignUp setUser={setUser}/>} /> 
-                <Route path="/login" element={<Login setUser={setUser}/>} />
+                <Route path="/login" element={<Login onLogin={handleLogin} />} />
           </Routes>
             </div>
               

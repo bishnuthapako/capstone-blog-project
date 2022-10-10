@@ -33,8 +33,8 @@ p1 = Post.create(
 )
 p2 = Post.create(
     user_id: u2.id,
-    title: "How To Write Optimized Articles With Minimum Efforts",
-    content: "Welcome guys, I am going to show you how to write SEO optimized articles on google docs using SEO Writing Assistant which helps to write SEO friendly contents even on digital marketing. Google will love and chances to rank on the first page.",
+    title: "Understand, How to use the ‘self’ keyword in Ruby.",
+    content: "If you are learning Ruby you may find the use of the self keyword very confusing. A lot of the problems beginners face are caused by not understanding self. In this post, I am going to look at Self in a variety of every-day situations. The self keyword in Ruby enables you to access the current object that is receiving the current message.",
     minutes_to_read: 10
 )
 

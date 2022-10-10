@@ -12,10 +12,10 @@ rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
     # end
 
     # POST
-    # def create
-    #     post = Post.create(post_params)
-    #     render json: post, status: :created
-    # end
+    def create
+        post = Post.create(post_params)
+        render json: post, status: :created
+    end
 
     def show
         post = Post.find(params[:id])
@@ -27,9 +27,9 @@ rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
     
     private
 
-    # def post_params
-    #     params.permit(:title, :content)
-    # end
+    def post_params
+        params.permit(:title, :content, :minutes_to_read)
+    end
 
     def record_not_found
         render json: {error: "Post not found"}, status: :not_found

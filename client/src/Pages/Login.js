@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useNavigate } from 'react-router-dom'
 
-function Login({setUser}) {
+function Login({onLogin}) {
 
   const navigate = useNavigate();
 
@@ -13,6 +13,7 @@ function Login({setUser}) {
     password: ""
   })
 
+ 
 
 
 async function handleSubmitForm(e){
@@ -30,7 +31,7 @@ async function handleSubmitForm(e){
   const res = await fetch("/login", config)
   const data = await res.json()
   // console.log(data, 'data')
-  setUser(data)
+  onLogin(data)
  navigate("/")
  }
 
