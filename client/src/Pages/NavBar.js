@@ -21,7 +21,7 @@ function NavBar({user, onLogOut}) {
 
     <Navbar bg="light" expand="lg">
       <Container fluid>
-        <Navbar.Brand href="#"><Link to="/"><h1>Blogging</h1></Link></Navbar.Brand>
+        <Navbar.Brand href="#"><Link to="/"><h2>BLOG APP</h2></Link></Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
         <Form className="d-flex">
