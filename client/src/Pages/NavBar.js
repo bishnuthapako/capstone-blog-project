@@ -1,15 +1,17 @@
-import React, {useContext} from 'react'
+import React, {useContext, useState} from 'react'
 import { Link } from 'react-router-dom'
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+
 // import { UsersContext } from '../App'
 
 
 function NavBar({user, onLogOut}) {
 
+ 
   // const user = useContext(UsersContext)
   console.log(user, 'userdetails')
 
@@ -42,9 +44,8 @@ function NavBar({user, onLogOut}) {
             style={{ maxHeight: '100px' }}
             navbarScroll>
           {user ? <>
-            <div>
-                <Nav.Link as={Link} to="/post" className="fw-bold fs-5">Create Post</Nav.Link>
-            </div>
+               <Nav.Link as={Link} to="/post" className="fw-bold fs-5">Create post</Nav.Link>
+
             <div>
               <Button variant="secondary" onClick={handleLogOut}>Logout</Button>
             </div>

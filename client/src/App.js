@@ -69,7 +69,7 @@ function handleLogout(){
                 <Routes>
                     <Route exact path="/" element={<Home posts={posts}/>} />
                     <Route exact path="/posts/:id" element={<Post />}/>
-                    <Route exact path="/post" element={<CreatePost />} /> 
+                    <Route exact path="/post" element={<CreatePost user={user} setUser={setUser}/>} /> 
                     <Route exact path="/signup" element={<SignUp setUser={setUser}/>} /> 
                     <Route exact path="/login" element={<Login onLogin={setUser} />} />
               </Routes>

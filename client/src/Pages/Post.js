@@ -48,7 +48,7 @@ const emojis = makeEmojiList(minutes_to_read)
     <article className="mt-4 p-5 bg-white text-green rounded post-section">
     {/* <img src="" alt="Avatar" className="avatar"> */}
     <div className='avatar-group'>
-      <img src="https://www.w3schools.com/howto/img_avatar.png" about='avatar' className='post-avatar'/>
+      <img src="https://www.w3schools.com/howto/img_avatar.png" alt='avatar' about='avatar' className='post-avatar'/>
     </div>
     <div className='author-pic'>
       <h3>{author}</h3>
@@ -65,7 +65,7 @@ const emojis = makeEmojiList(minutes_to_read)
     {/* ************************Create-Comments-Here */}
     <div className='mt-2 p-3 bg-white form-group comment-group'>
         <div className='comment-avatar'>
-          <img src="https://www.w3schools.com/howto/img_avatar.png" about='avatar' className='post-avatar'/>
+          <img src="https://www.w3schools.com/howto/img_avatar.png" alt='user_avatar' about='avatar' className='post-avatar'/>
         </div>
         <div className='form-comment' >
           <textarea className="form-control" rows="3" id="comment" placeholder='Add to the discussion' />
