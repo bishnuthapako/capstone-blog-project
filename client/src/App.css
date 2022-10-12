@@ -43,7 +43,77 @@ body {
   width: 100%;
   position: absolute;
   background-color: red;
+  overflow: auto;
 }
 
-.container-fluid,
-.row-fluid { height: inherit; }
+/* .container-fluid,
+.row-fluid { height: inherit; } */
+
+.bodycolor{
+  background-color: #F5F5F5;
+  width: 100%;
+  height: 100%;
+    /* margin: 0 auto; */
+}
+.post-avatar{
+  vertical-align: middle;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  
+}
+
+.post-section{
+  position: relative;
+}
+
+.author-pic{
+  position: absolute;
+  top: 13%;
+  left: 13%;
+}
+
+.min-read{
+  position: absolute;
+  left: 13%;
+  top: 25%;
+}
+/* .commentbox{
+  position: absolute;
+} */
+.comment-avatar{
+  vertical-align: middle;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+.comment-group{
+  position: relative;
+  height: 190px;
+}
+
+.form-comment{
+  position: absolute;
+  width: 85%;
+  top: 25%;
+  left: 10%;
+}
+
+.post-comment{
+  position: relative;
+  height: 190px;
+}
+.comments-avatar{
+  position: absolute;
+  left: 10%;
+}
+.users-avatar{
+  position: absolute;
+  left: 18%;
+}
+
+.comment-body{
+  position: absolute;
+  left: 17%;
+  bottom: 30%;
+}

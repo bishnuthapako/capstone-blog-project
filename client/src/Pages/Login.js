@@ -7,7 +7,7 @@ function Login({onLogin}) {
 
   const navigate = useNavigate();
 
-
+ const [error, setError]=useState([])
   const [credentials, setCredientials]=useState({
     username: "",
     password: ""
@@ -32,7 +32,10 @@ async function handleSubmitForm(e){
   const data = await res.json()
   // console.log(data, 'data')
   onLogin(data)
- navigate("/")
+  if(res.ok){
+     navigate("/")
+  }
+//  navigate("/")
  }
 
  function handleFormControl(e){
@@ -51,12 +54,12 @@ async function handleSubmitForm(e){
         <Form onSubmit={handleSubmitForm} >
       <Form.Group className="mb-3" controlId="formBasicUsername">
         <Form.Label>User Name</Form.Label>
-        <Form.Control type="username" placeholder="Enter username" onChange={handleFormControl} name="username" value={credentials.username}/>
+        <Form.Control type="username" placeholder="Enter username" onChange={handleFormControl} name="username" value={credentials.username} required/>
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formBasicPassword">
         <Form.Label>Password</Form.Label>
-        <Form.Control type="password" placeholder="Password" onChange={handleFormControl} name="password" value={credentials.password}/>
+        <Form.Control type="password" placeholder="Password" onChange={handleFormControl} name="password" value={credentials.password} required/>
       </Form.Group>
 
       <Button variant="primary" type="submit">

@@ -42,33 +42,33 @@ function SignUp({setUser}) {
   return (
     <Form onSubmit={handleFormSubmit}>
       <Form.Group className="mb-3" controlId="formBasicFullName">
-        <Form.Control type="text" placeholder="Enter your Name" name="fullname" value={userDetails.fullname} onChange={handleInputForm}/>
+        <Form.Control type="text" placeholder="Enter your Name" name="fullname" value={userDetails.fullname} onChange={handleInputForm} required/>
       </Form.Group>
 
     <Form.Group className="mb-3" controlId="formBasicUsername">
-        <Form.Control type="text" placeholder="Enter username" name="username" value={userDetails.username} onChange={handleInputForm}/>
+        <Form.Control type="text" placeholder="Enter username" name="username" value={userDetails.username} onChange={handleInputForm} required/>
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Control type="password" placeholder="Password" name="password" value={userDetails.password} onChange={handleInputForm}/>
+        <Form.Control type="password" placeholder="Password" name="password" value={userDetails.password} onChange={handleInputForm} required/>
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Control type="password" placeholder="Confirm Password" name="password_confirmation" value={userDetails.password_confirmation} onChange={handleInputForm}/>
+        <Form.Control type="password" placeholder="Confirm Password" name="password_confirmation" value={userDetails.password_confirmation} onChange={handleInputForm} required/>
       </Form.Group>
 
     <Form.Group className="mb-3" controlId="formBasicEmail">
-      <Form.Control type="email" placeholder="Enter Your Email Address" name="email" value={userDetails.email} onChange={handleInputForm}/>
+      <Form.Control type="email" placeholder="Enter Your Email Address" name="email" value={userDetails.email} onChange={handleInputForm} required/>
       <Form.Text className="text-muted">
         We'll never share your email with anyone else.
       </Form.Text>
     </Form.Group>
 
     <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-        <Form.Control as="textarea" rows={3} placeholder="Enter Your Bio" name="bio" value={userDetails.bio} onChange={handleInputForm}/>
+        <Form.Control as="textarea" rows={3} placeholder="Enter Your Bio" name="bio" value={userDetails.bio} onChange={handleInputForm} required/>
     </Form.Group>
     <Form.Group className="mb-3" controlId="formBasicText">
-        <Form.Control type="text" placeholder="Enter your Image Url" name="avatar_url" value={userDetails.avatar_url} onChange={handleInputForm}/>
+        <Form.Control type="text" placeholder="Enter your Image Url" name="avatar_url" value={userDetails.avatar_url} onChange={handleInputForm} required/>
       </Form.Group>
 
     <Button variant="primary" type="submit">

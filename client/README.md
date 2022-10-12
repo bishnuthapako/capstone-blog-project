@@ -2,7 +2,7 @@
 
 This Blog website is the final project for the Flatiron School using Ruby on Rails for the Backned & front-end for react router dom
 
-Video Link: https://youtu.be/1kZpt4p9qXc
+Video Link here: https://youtu.be/1kZpt4p9qXc
 
 ## Installation Guide
 

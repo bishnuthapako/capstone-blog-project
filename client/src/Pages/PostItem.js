@@ -10,10 +10,10 @@ function PostItem({post}) {
 
     const emoji = makeEmojiList(minutes_to_read)
 
-    console.log(post, 'post')
+    // console.log(post, 'post')
 
   return (
-    <article key={id}>
+    <article className="mt-2 p-5 bg-white text-green rounded" key={id}>
         <h3>
             <Link to={`/posts/${id}`}>{title}</Link>
         </h3>
@@ -21,7 +21,7 @@ function PostItem({post}) {
             {date} . {emoji} {makeEmojiList} min read
         </small>
 
-        <p>{preview}</p>
+        {/* <p>{preview}</p> */}
 
     </article>
   )

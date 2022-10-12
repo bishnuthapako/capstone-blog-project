@@ -1,23 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import PostItem from './PostItem'
 
-function Home() {
-  const [posts, setPosts]=useState([])
-  console.log(posts, 'art')
-  useEffect(()=>{
-    fetch("/posts")
-    .then((res)=>res.json())
-    .then((data)=>{
-      // console.log(data, 'data')
-      setPosts(data)})
-  },[])
+function Home({posts}) {
+  console.log(posts, 'posts')
 
 
   return (
-    <main>
-      {posts.map((post)=>(<PostItem key={post.id} post={post} />)
+    <>
+     {posts.map((post)=>(<PostItem key={post.id} post={post} />)
     )}
-    </main>
+    </>
   
 );
 }
