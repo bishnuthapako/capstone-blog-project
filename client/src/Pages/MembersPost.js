@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import PostItem from './PostItem'
+// import PostItem from './PostItem'
 
 
 const initialState = {
@@ -33,11 +33,11 @@ if(status==="rejected") return <h1>{error}</h1>
 
     <main>
       <h2>Member only Posts</h2>
-      {
+      {/* {
         articles.map((article)=>(
           <PostItem key={article.id} post={article} />
         ))
-      }
+      } */}
     </main>
   )
 }

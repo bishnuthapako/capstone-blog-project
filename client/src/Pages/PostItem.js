@@ -4,7 +4,7 @@ import { makeEmojiList } from '../Components/MakeEmojiPage'
 
 function PostItem({post}) {
 
-    const { id, title, preview, date, minutes_to_read } = post;
+    const { id, title, date, minutes_to_read } = post;
 
     console.log(id,'id')
 

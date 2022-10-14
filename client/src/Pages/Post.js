@@ -48,11 +48,13 @@ const emojis = makeEmojiList(minutes_to_read)
     <article className="mt-4 p-5 bg-white text-green rounded post-section">
     {/* <img src="" alt="Avatar" className="avatar"> */}
     <div className='avatar-group'>
-      <img src="https://www.w3schools.com/howto/img_avatar.png" alt='avatar' about='avatar' className='post-avatar'/>
+      <img src="https://www.w3schools.com/howto/img_avatar.png" alt='My Awesome Image' className='post-avatar'/>
     </div>
     <div className='author-pic'>
       <h3>{author}</h3>
     </div>
+    <div className='post-section-edit'><button type="button" className="btn btn-link">Edit</button></div>
+    <div className='post-section-delete'><button type="button" className="btn btn-link">Delete</button></div>
     <small className='min-read'>
           <p>{date} . {emojis} {minutes_to_read} min read</p>
     </small>

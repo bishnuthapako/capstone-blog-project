@@ -48,9 +48,11 @@ function handleLogout(){
   setUser(null);
 }
 
+
+
   return (
     <>
-    <UsersContext.Provider value={user}>
+    <UsersContext.Provider value={{user}}>
         
 <div className="bodycolor">
     <div className='container'>

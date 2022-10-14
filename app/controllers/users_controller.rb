@@ -1,38 +1,57 @@
 class UsersController < ApplicationController
     skip_before_action :authenticate, only:[:create]
+    # before_action :set_user, only: %i[show update]
 
     def index
-        users = User.all
-        render json: users
+        @users = User.all
+        render json: @users
     end
  # POST /users
     def create
-        user = User.create!(users_param)
+        user = User.create(users_param)
+      if user.valid?
         session[:user_id] = user.id
         render json:user, status: :created
+      else
+        render json: {error: user.errors.full_message}, status: :unprocessable_entity
+      end
     end
 
  # GET /users/1
     def show
+      # debugger;
         render json: @current_user
     end
 
     # PATCH/PUT /users/1
     def update
+      user = User.find(params[:id])
         if user.update(users_param)
           render json: user
         else
-          render json: user.errors, status: :unprocessable_entity
+          render json: { error: "User is not found" }, status: :not_found
         end
       end
 
-
+    def destroy
+      user = User.find_by(id: params[:id])
+      if user
+        user.destroy
+        head :no_content
+      else
+          render json: { error: "User is not found" }, status: :not_found
+        end
+    end
 
 
     private
 
+    def set_user
+      @user = User.find(params[:id])
+    end
+
     def users_param
-        params.permit(:fullname, :username, :password, :password_confirmation, :password_digest, :email, :bio, :avatar_url )
+        params.permit(:fullname, :username, :password, :password_confirmation, :email, :bio, :avatar_url )
     end
 
 

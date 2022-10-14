@@ -20,13 +20,13 @@ function SignUp({setUser}) {
       e.preventDefault()
       const signUpConfig = {
         method: "POST",
-        header: {
+        headers: {
           "Content-Type": "application/json"
         },
         body: JSON.stringify(userDetails)
       }
       const response = await fetch("/signup", signUpConfig)
-      const data = response.json()
+      const data = await response.json()
       console.log(data, 'signup')
       setUser(data)
 

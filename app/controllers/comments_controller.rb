@@ -1,5 +1,6 @@
 class CommentsController < ApplicationController
-    skip_before_action :authenticate, only: [:create]
+    # skip_before_action :authenticate, only: [:create]
+    before_action :set_comment, only: &i[show update destroy]
     
     def index
         @comments = Comment.all
@@ -10,7 +11,7 @@ class CommentsController < ApplicationController
     def create
         @comment = Comment.create!(comment_params)
         if @comment.save
-            render json: comment, status: :created
+            render json: comment, status: :created, location: @comment
         else
             render json: @comment.errors, status: :unprocessable_entity
         end
@@ -39,7 +40,7 @@ class CommentsController < ApplicationController
     private
 
     def set_comment
-        @comment = Comment.find(params[:id])
+        @comment = Comment.find_by(id: params[:id])
       end
 
     def comment_params

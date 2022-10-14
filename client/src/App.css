@@ -67,6 +67,27 @@ body {
   position: relative;
 }
 
+.post-section-edit{
+  position: absolute;
+  right: 20%;
+}
+
+.post-section-edit button{
+  text-decoration: none;
+}
+
+
+
+
+.post-section-delete{
+  position: absolute;
+  right: 10%;
+}
+
+.post-section-delete button{
+  text-decoration: none;
+}
+
 .author-pic{
   position: absolute;
   top: 13%;
