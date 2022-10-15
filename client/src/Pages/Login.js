@@ -7,14 +7,13 @@ function Login({onLogin}) {
 
   const navigate = useNavigate();
 
- const [error, setError]=useState([])
+//  const [error, setError]=useState([])
   const [credentials, setCredientials]=useState({
     username: "",
     password: ""
   })
 
  
-
 
 async function handleSubmitForm(e){
   e.preventDefault()

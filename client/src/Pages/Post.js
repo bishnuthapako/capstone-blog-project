@@ -1,6 +1,11 @@
 import React, {useEffect, useState} from 'react'
 import { useParams } from 'react-router-dom'
 import { makeEmojiList } from '../Components/MakeEmojiPage'
+import { FaEdit } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+import Form from 'react-bootstrap/Form';
 
 
 const initialState={
@@ -9,7 +14,75 @@ const initialState={
   status: "pending"
 }
 
-function Post() {
+function Post({deletePost, postTile, postContent, onUpdatePost, setUser, setUserPosts, userPosts, postId}) {
+
+//  console.log(postId, 'content')
+
+
+
+// ********* modal popup
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+// ******************** modal end
+
+
+
+
+// // ******************** Edit Form
+const [blogTitle, setBlogTitle]=useState(postTile)
+const [blogContent, setBlogContent]=useState(postContent)
+
+function handleUpdateSubmit(e){
+e.preventDefault();
+
+const inputData = {
+  blogTitle: blogTitle,
+  blogContent: blogContent
+}
+
+fetch(`/posts/${postId}`,{
+  method: "PATCH",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify(inputData)
+}).then((res)=>res.json())
+.then((update)=>onUpdatePost(update))
+
+}
+
+function handleInputForm(e){
+const {name, value}=e.target
+if(name==="blogTitle"){
+  setBlogTitle(value)
+} else{
+  setBlogContent(value)
+}
+
+
+// const {name, value}=e.target;
+// console.log(value, 'value')
+// setUserPostTiles("")
+// const copyUserPost = JSON.parse(JSON.stringify(userPosts))
+// const currentPost = 
+
+// if(name==="postTile"){
+//   const modifyUserPost = copyUserPost.map((post)=>{
+//     if(post.id ===postId){
+//       post.title = value
+//       return post
+//     } 
+//     return post
+//   })
+// setUserPosts(modifyUserPost)
+}
+
+
+
+// ******************* Edit-form-end
 
 const [{post, error, status}, setState]=useState(initialState)
 const { id } =useParams();
@@ -41,9 +114,17 @@ if (status==="rejected"){
 const {title, author, date, content, minutes_to_read }=post;
 const emojis = makeEmojiList(minutes_to_read)
 
+function handlePostDelete(id){
+  fetch(`/posts/${id}`,{
+    method: "DELETE",
+  })
+  deletePost(id)
+}
+
 
   return (
     <>
+   
     <div className="container-fluid">
     <article className="mt-4 p-5 bg-white text-green rounded post-section">
     {/* <img src="" alt="Avatar" className="avatar"> */}
@@ -53,15 +134,18 @@ const emojis = makeEmojiList(minutes_to_read)
     <div className='author-pic'>
       <h3>{author}</h3>
     </div>
-    <div className='post-section-edit'><button type="button" className="btn btn-link">Edit</button></div>
-    <div className='post-section-delete'><button type="button" className="btn btn-link">Delete</button></div>
+    <div className='post-section-edit'><button type="button" className="btn btn-link" onClick={handleShow}><FaEdit /></button></div>
+    <div className='post-section-delete'><button type="button" className="btn btn-link" onClick={()=>handlePostDelete(postId)}><MdDelete /></button></div>
     <small className='min-read'>
           <p>{date} . {emojis} {minutes_to_read} min read</p>
     </small>
+   
       <div className='p-5 posts'>
+      <hr/>
         <h1>{title}</h1>
         <p>{content}</p>
       </div>
+   
     </article>
     <h3>Top comment section</h3>
     {/* ************************Create-Comments-Here */}
@@ -94,6 +178,26 @@ const emojis = makeEmojiList(minutes_to_read)
         </div>
     </div>  
     </div>
+    {/* ************************* */}
+
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+        </Modal.Header>
+        <Modal.Body>
+
+          <Form onSubmit={handleUpdateSubmit}>
+              <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+                    <Form.Control as="textarea" rows={2} placeholder="New post title here" name="blogTitle" value={blogTitle} onChange={handleInputForm} required/>
+              </Form.Group>
+
+              <Form.Group className="mb-3 mt-3" controlId="exampleForm.ControlTextarea1">
+                  <Form.Control as="textarea" rows={5} placeholder="Write your post content here" name="blogContent" value={blogContent} onChange={handleInputForm} required/>
+              </Form.Group>
+                    <Button variant='secondary' className='mt-3' onClick={handleClose}>Close</Button>{' '}
+                    <Button type='submit' variant='primary' className='mt-3' onClick={handleClose}>update</Button>
+          </Form>
+        </Modal.Body>
+      </Modal>
     </>
   )
 }

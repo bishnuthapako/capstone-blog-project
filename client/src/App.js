@@ -8,16 +8,15 @@ import NavBar from './Pages/NavBar';
 import Home from './Pages/Home';
 import Post from './Pages/Post';
 import CreatePost from './Pages/CreatePost';
-
-// import { Link } from 'react-router-dom';
 import LeftSideBar from './Pages/LeftSideBar';
+
 
 const UsersContext = createContext();
 
 function App() {
 
   const [user, setUser]=useState(null)
-  const [posts, setPosts]=useState([])
+  const [userPosts, setUserPosts]=useState([])
   const [error, setError]=useState([])
 
   useEffect(()=>{
@@ -36,9 +35,9 @@ function App() {
       if(data.error){
         setError(data.error)
       } else {
-        setPosts(data)
+        setUserPosts(data)
       }
-      // console.log(data, 'data')
+      // console.log(data[0], 'data')
     })
       .catch((errorData)=>setError(errorData))
   },[])
@@ -48,7 +47,28 @@ function handleLogout(){
   setUser(null);
 }
 
+function handlePostDelete(id){
+  const handleDelete = userPosts.filter(post=>post.id !==id)
+  setUserPosts(handleDelete)
+  window.location.reload()
 
+}
+
+
+function handleUpdatePost(update){
+  const updatePostArr = userPosts.map((post)=>{
+    if(post.id ===update.id){
+      return update
+    } else{
+      return post
+    }
+  })
+  setUserPosts(updatePostArr)
+}
+
+const updatePosts = (post)=>{
+  setUserPosts([...userPosts, post])
+}
 
   return (
     <>
@@ -69,15 +89,26 @@ function handleLogout(){
                 
               <div className="col-8"> 
                 <Routes>
-                    <Route exact path="/" element={<Home posts={posts}/>} />
-                    <Route exact path="/posts/:id" element={<Post />}/>
+                    <Route exact path="/" element={<Home userPosts={userPosts}/>} />
+                    <Route exact path="/posts/:id" element={
+                      // <Post userPosts={userPosts
+                      userPosts.map((post)=>
+                      <Post key={post.id} 
+                      setUser={setUser} 
+                      setUserPosts={setUserPosts}
+                      userPosts={userPosts}
+                      postId={post.id}
+                      onUpdatePost={handleUpdatePost} 
+                      deletePost={handlePostDelete} 
+                      postTile={post.title} 
+                      postContent={post.content}  />) }/>
                     <Route exact path="/post" element={<CreatePost user={user} setUser={setUser}/>} /> 
                     <Route exact path="/signup" element={<SignUp setUser={setUser}/>} /> 
                     <Route exact path="/login" element={<Login onLogin={setUser} />} />
               </Routes>
               </div>        
               <div className="col-2">
-                  <button className='btn bg-light mt-3'> rightbar. How To Write Optimized Articles With Minimum Efforts</button>
+                  <button className='btn bg-light mt-3'> </button>
               </div>
       </div>
     </div>

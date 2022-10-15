@@ -2,11 +2,11 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { makeEmojiList } from '../Components/MakeEmojiPage'
 
-function PostItem({post}) {
+function PostItem({userPost}) {
 
-    const { id, title, date, minutes_to_read } = post;
+    const { id, title, date, minutes_to_read } = userPost;
 
-    console.log(id,'id')
+    console.log(userPost,'id')
 
     const emoji = makeEmojiList(minutes_to_read)
 

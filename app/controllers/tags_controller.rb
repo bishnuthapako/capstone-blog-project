@@ -1,6 +1,6 @@
 class TagsController < ApplicationController
 
-    before_action :set_tag, only: %i[show update destroy]
+    # before_action :set_tag, only: %i[show update destroy]
 
     def index
         tags = Tag.all
@@ -27,11 +27,12 @@ class TagsController < ApplicationController
 
     # UPDATE /PATCH
     def update
-        if @tag.update!(tag_params)
-           render json: @tag, status: :accepted
-        else
-         render json: { errors: @tag.errors.full_messages}, status: :unprocessable_entity
-        end
+        tag = Tag.find_by(id: params[:id])
+       if tag.update(tag_params)
+            render json: tag
+          else
+            render json: { error: "Tag is not found" }, status: :not_found
+          end
      end
 
     # DELETE
@@ -42,13 +43,9 @@ class TagsController < ApplicationController
         tag.destroy
         head :no_content
     else
-    render json: { error: "Tag not found" }, status: :not_found
+        render json: { error: "Tag not found" }, status: :not_found
+        end
     end
-end
-
-
-
-
 
 
 
@@ -60,6 +57,6 @@ end
     end
 
     def tag_params
-        params.permit(:tagname)
+        params.require(:tag).permit(:tagname)
     end
 end

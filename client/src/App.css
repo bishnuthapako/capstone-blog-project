@@ -69,11 +69,13 @@ body {
 
 .post-section-edit{
   position: absolute;
-  right: 20%;
+  right: 15%;
 }
 
 .post-section-edit button{
   text-decoration: none;
+  color: grey;
+
 }
 
 
@@ -82,10 +84,14 @@ body {
 .post-section-delete{
   position: absolute;
   right: 10%;
+
 }
 
 .post-section-delete button{
   text-decoration: none;
+  color: rgb(85, 83, 83);
+
+
 }
 
 .author-pic{

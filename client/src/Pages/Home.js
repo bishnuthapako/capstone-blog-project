@@ -1,14 +1,13 @@
 import React from 'react'
 import PostItem from './PostItem'
 
-function Home({posts}) {
-  console.log(posts, 'posts')
+function Home({userPosts}) {
+  console.log(userPosts, 'posts')
 
 
   return (
     <>
-     {posts.map((post)=>(<PostItem key={post.id} post={post} />)
-    )}
+     {userPosts.map((post)=>(<PostItem key={post.id} userPost={post} />))}
     </>
   
 );

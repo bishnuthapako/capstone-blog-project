@@ -11,9 +11,9 @@ class Post < ApplicationRecord
     user.username
   end
 
-  def preview
-    content
-  end
+  # def preview
+  #   content
+  # end
 
   def date
     created_at.strftime('%B %e %Y')

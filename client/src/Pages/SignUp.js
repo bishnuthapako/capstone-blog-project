@@ -1,9 +1,12 @@
 import React, {useState} from 'react'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { useNavigate } from 'react-router-dom'
 
 
 function SignUp({setUser}) {
+
+  const navigate = useNavigate();
 
   const [userDetails, setUserDetails]=useState({
     fullname: "",
@@ -27,8 +30,12 @@ function SignUp({setUser}) {
       }
       const response = await fetch("/signup", signUpConfig)
       const data = await response.json()
-      console.log(data, 'signup')
+      // console.log(data, 'signup')
       setUser(data)
+
+      if(response.ok){
+        navigate("/")
+      }
 
     }
 

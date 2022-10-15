@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-    skip_before_action :authenticate, only:[:create]
+    # skip_before_action :authenticate, only:[:create]
     # before_action :set_user, only: %i[show update]
 
     def index
@@ -20,7 +20,8 @@ class UsersController < ApplicationController
  # GET /users/1
     def show
       # debugger;
-        render json: @current_user
+      user = User.find_by(id: params[:id])
+        render json: user
     end
 
     # PATCH/PUT /users/1
@@ -51,7 +52,7 @@ class UsersController < ApplicationController
     end
 
     def users_param
-        params.permit(:fullname, :username, :password, :password_confirmation, :email, :bio, :avatar_url )
+        params.require(:user).permit(:fullname, :username, :password, :password_confirmation, :email, :bio, :avatar_url )
     end
 
 
