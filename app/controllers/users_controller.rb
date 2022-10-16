@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
     skip_before_action :authenticate, only:[:create]
-    before_action :set_user, only: %i[show update]
+    # before_action :set_user, only: %i[show update]
 
     def index
         @users = User.all
@@ -8,20 +8,23 @@ class UsersController < ApplicationController
     end
  # POST /users
     def create
-        user = User.create(users_param)
-      if user.valid?
-        session[:user_id] = user.id
-        render json:user, status: :created
-      else
-        render json: {error: user.errors.full_message}, status: :unprocessable_entity
-      end
+        user = User.create!(user_params)
+        session[:user_id]=user.id
+        render json: user, status: :created
+      # if user.valid?
+      #   session[:user_id] = user.id
+      #   render json:user, status: :created
+      # else
+      #   render json: {error: user.errors.full_message}, status: :unprocessable_entity
+      # end
     end
 
  # GET /users/1
     def show
       # debugger;
-      user = User.find_by(id: params[:id])
-        render json: user
+      render json: @current_user
+      # user = User.find_by(id: params[:id])
+      #   render json: user
     end
 
     # PATCH/PUT /users/1
@@ -51,8 +54,8 @@ class UsersController < ApplicationController
       @user = User.find(params[:id])
     end
 
-    def users_param
-        params.require(:user).permit(:fullname, :username, :password, :password_confirmation, :email, :bio, :avatar_url )
+    def user_params
+        params.permit(:fullname, :username, :password, :password_confirmation, :email, :bio, :avatar_url )
     end
 
 
