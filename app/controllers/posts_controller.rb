@@ -1,11 +1,16 @@
 class PostsController < ApplicationController
-    # skip_before_action :authenticate, only:[:create]
-    # before_action :set_post, only: %i[show update destroy]
+    skip_before_action :authenticate, only:[:create]
+    before_action :set_post, only: %i[show update destroy]
     
     def index
         posts = Post.all
-        render json: posts, each_serializer: PostListSerializer
+        render json: posts
+        # , each_serializer: PostListSerializer
     end
+    # def index 
+    #     posts = Post.where(is_member_only: false).includes(:user).order(created_at: :desc)
+    #     render json: posts, each_serializer: PostListSerializer
+    # end
 
     # POST
 

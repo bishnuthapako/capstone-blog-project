@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
     # skip_before_action :authenticate, only: [:create]
-    # before_action :set_comment, only: &i[show update destroy]
+    before_action :set_comment, only: &i[show update destroy]
     
     def index
         comments = Comment.all
