@@ -1,21 +1,20 @@
 class PostsController < ApplicationController
     # skip_before_action :authenticate, only:[:create]
-    before_action :set_post, only: %i[show update destroy]
-    
+    before_action :set_post, only: [:show, :update, :destroy]
     def index
-        posts = Post.all
+        posts = Post.all.order(created_at: :desc)
         render json: posts
-        # , each_serializer: PostListSerializer
+     
     end
-    # def index 
-    #     posts = Post.where(is_member_only: false).includes(:user).order(created_at: :desc)
-    #     render json: posts, each_serializer: PostListSerializer
-    # end
+
 
     # POST
 
     def create
+        # byebug
         post = Post.new(post_params)
+        post.user_id = session[:user_id]
+        # byebug
         if post.save
             render json: post, status: :created
         else
@@ -34,6 +33,7 @@ class PostsController < ApplicationController
 
     def update
         post = Post.find_by(id: params[:id])
+        byebug
         post.update(post_params)
         render json: post
     end
@@ -43,7 +43,9 @@ class PostsController < ApplicationController
     # DELETE
         
     def destroy
+        # byebug
             post = Post.find_by(id: params[:id])
+            # post.user_id = session[:user_id]
         if post
             post.destroy
             head :no_content

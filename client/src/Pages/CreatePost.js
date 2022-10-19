@@ -1,66 +1,79 @@
 import React, {useState} from 'react'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { useNavigate } from "react-router-dom";
 
 
+function CreatePost({handleAddPost, user}) {
+
+  let navigate = useNavigate()
+
+ const [title, setTitle]=useState("")
+ const [content, setContent]=useState("")
+ const [minutesToRead, setMinutesToRead]=useState("")
+ const [isLoading, setIsLoading]=useState(false)
 
 
-
-function CreatePost({user, setUser}) {
-
-  const [posts, setPosts]=useState({
-    title: "",
-    content: ""
-  })
-
-async function handleFormData(e){
+function handleSubmit(e){
   e.preventDefault();
-  const createPost = {
+  setIsLoading(true)
+  fetch("/posts",{
     method: "POST",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify({...posts, user_id:user.id})
-  }
-  const response = await fetch("/posts", createPost)
-  const data = await response.json()
-  console.log(data, 'post')
-  setUser(data)
-
+    body: JSON.stringify({
+      title,
+      content,
+      user_id: user.id,
+      minutes_to_read: minutesToRead
+    }),
+  }).then((r)=>r.json())
+  .then((newPost)=>{
+    handleAddPost(newPost)
+    navigate("/")
+  })
 }
-
-function handleInputData(e){
-  const copyPosts = {...posts}
-  copyPosts[e.target.name]=e.target.value
-  setPosts(copyPosts)
-}
-
-
 
 
   return (
     <>
-      <Form onSubmit={handleFormData}>
-      
-      <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-        <Form.Control as="textarea" rows={2} placeholder="New post title here" name="title" value={posts.title} onChange={handleInputData} required/>
+<Form onSubmit={handleSubmit}>  
+    <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+        <Form.Control as="textarea" rows={2} 
+        placeholder="New post title here" 
+        name="title" 
+        value={title} 
+        onChange={(e)=>setTitle(e.target.value)}/>
     </Form.Group>
-{/************/}
+      <div className='tags-input'>
+      <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+          <Form.Control type="text" placeholder="Add Tags" required />
+      </Form.Group>
+      </div>
+    
+ 
+    
+    <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+        <Form.Control as="textarea" rows={2} 
+        placeholder="Minutes to read" 
+        name="minutesToRead" 
+        value={minutesToRead} 
+        onChange={(e)=>setMinutesToRead(e.target.value)}/>
+    </Form.Group>
 
-    <select class="form-select mt-3 p-2">
-      <option>Programming</option>
-      <option>JavaScript</option>
-      <option>Ruby</option>
-      <option>Rails</option>
-    </select>
-
-{/*******************/}
     <Form.Group className="mb-3 mt-3" controlId="exampleForm.ControlTextarea1">
-        <Form.Control as="textarea" rows={5} placeholder="write your post content here" name="content" value={posts.content} onChange={handleInputData} required/>
+        <Form.Control as="textarea" rows={5} 
+        placeholder="write your post content here" 
+        name="content" 
+        value={content} 
+        onChange={(e)=>setContent(e.target.value)}/>
     </Form.Group>
 
-    <Button variant="secondary" type="submit">Publish</Button>
-  </Form>
+    <Button variant="secondary" type="submit">
+      {isLoading ? "Loading...": "Publish"}
+    </Button>
+</Form>
     </>
   )
 }

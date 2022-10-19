@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-    skip_before_action :authenticate, only:[:create]
+    skip_before_action :authorize, only:[:create]
     # before_action :set_user, only: %i[show update]
 
     def index
@@ -8,6 +8,7 @@ class UsersController < ApplicationController
     end
  # POST /users
     def create
+      # byebug;
         user = User.create!(user_params)
         session[:user_id]=user.id
         render json: user, status: :created

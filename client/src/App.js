@@ -8,111 +8,102 @@ import NavBar from './Pages/NavBar';
 import Home from './Pages/Home';
 import Post from './Pages/Post';
 import CreatePost from './Pages/CreatePost';
-import LeftSideBar from './Pages/LeftSideBar';
 
 
-const UsersContext = createContext();
+
+export const UsersContext = createContext();
 
 function App() {
 
   const [user, setUser]=useState(null)
-  const [userPosts, setUserPosts]=useState([])
-  const [error, setError]=useState([])
+
 
   useEffect(()=>{
-    fetch("/me").then((response)=>{
-      if(response.ok){
-        response.json().then((data)=>setUser(data))
+    fetch("/me").then((res)=>{
+      if(res.ok){
+        res.json().then((data)=>setUser(data))
       }
     });
   },[])
 
-  useEffect(()=>{
-    fetch("/posts")
-    .then((res)=>res.json())
-    .then((data)=>{
+  // if (!user) return <Login onLogin={setUser} />
 
-      if(data.error){
-        setError(data.error)
-      } else {
-        setUserPosts(data)
-      }
-      // console.log(data[0], 'data')
-    })
-      .catch((errorData)=>setError(errorData))
-  },[])
+  const [posts, setPosts]=useState([])
+  // console.log(posts, 'post')
+useEffect(()=>{
+  fetch("/posts")
+  .then((r)=>r.json())
+  .then(setPosts)
+},[])
 
+// function handleAddPost(newPost){
+//   setPosts((posts)=>[...posts, newPost])
+// }
 
-function handleLogout(){
-  setUser(null);
-}
+// function handleAddPost(newMessage){
+// let copyMessage = JSON.parse(JSON.stringify(posts))
+// copyMessage.find((user)=>user.id===newMessage.user_id).posts.unshift(newMessage)
+// setPosts(copyMessage)
+// }
 
-function handlePostDelete(id){
-  const handleDelete = userPosts.filter(post=>post.id !==id)
-  setUserPosts(handleDelete)
-  window.location.reload()
-
+const handleAddPost = (post)=>{
+  setPosts([...posts, post])
 }
 
 
-function handleUpdatePost(update){
-  const updatePostArr = userPosts.map((post)=>{
-    if(post.id ===update.id){
-      return update
-    } else{
-      return post
-    }
-  })
-  setUserPosts(updatePostArr)
+
+
+// function handleDeletePost(postToDelete){
+//   const updatedPosts = posts.filter((post)=>post.id !==postToDelete.id);
+//   setPosts(updatedPosts)
+// }
+
+// function handleUpdatePost(updatedPost){
+//   const updatedPosts = posts.map((post)=>post.id ===updatedPost.id ? updatedPost : post);
+//   setPosts(updatedPosts)
+// }
+
+const [isUpdate, setIsUpdate]=useState(false)
+
+const handleUpdatePost = (post)=>{
+ let articles = posts
+articles.unshift(post)
+ setPosts(articles)
+ setIsUpdate(true)
 }
 
-const updatePosts = (post)=>{
-  setUserPosts([...userPosts, post])
-}
+// function handleUpdatePost(update){
+//   let updateArray = JSON.parse(JSON.stringify(posts))
+//   const findUser = updateArray.find((user)=>user.id===update.user_id)
+//   const newMessage = findUser.posts.map((post)=>{
+//     if(post.id===update.id){
+//       return update
+//     }else{
+//       return post
+//     }
+//   })
+//   findUser.posts=newMessage
+//   setPosts(updateArray.map((user)=>user.id===findUser.id? findUser : user))
+// }
 
   return (
     <>
     <UsersContext.Provider value={{user}}>
         
-<div className="bodycolor">
+    <NavBar user={user} setUser={setUser}/>
+  <div className='container-fluid'>
     <div className='container'>
-                  <div className='container-fluid'>
-                        <NavBar user={user} onLogOut={handleLogout}/>
-                  </div>                 
-     
-       
-        <div className="row">
-              <div className="col-2 mt-3">
-                <LeftSideBar />
-                    {/* <button className='btn bg-light'>How To Write Optimized Articles With Minimum Efforts</button> */}
-              </div>
-                
-              <div className="col-8"> 
+<div className="container">
                 <Routes>
-                    <Route exact path="/" element={<Home userPosts={userPosts}/>} />
-                    <Route exact path="/posts/:id" element={
-                      // <Post userPosts={userPosts
-                      userPosts.map((post)=>
-                      <Post key={post.id} 
-                      setUser={setUser} 
-                      setUserPosts={setUserPosts}
-                      userPosts={userPosts}
-                      postId={post.id}
-                      onUpdatePost={handleUpdatePost} 
-                      deletePost={handlePostDelete} 
-                      postTile={post.title} 
-                      postContent={post.content}  />) }/>
-                    <Route exact path="/post" element={<CreatePost user={user} setUser={setUser}/>} /> 
+                    <Route exact path="/" element={<Home posts={posts}/>} />
+                    <Route exact path="/posts/:id" element={ <Post onDeletePost={handleUpdatePost} setPosts={setPosts} onUpdatePost={handleUpdatePost} posts={posts} /> }/>
+                    <Route exact path="/post" element={<CreatePost handleAddPost={handleAddPost} user={user} setUser={setUser}/>} /> 
                     <Route exact path="/signup" element={<SignUp setUser={setUser}/>} /> 
                     <Route exact path="/login" element={<Login onLogin={setUser} />} />
-              </Routes>
-              </div>        
-              <div className="col-2">
-                  <button className='btn bg-light mt-3'> </button>
-              </div>
+              </Routes> 
       </div>
     </div>
-</div>
+  </div>
 </UsersContext.Provider>
     </>
   );

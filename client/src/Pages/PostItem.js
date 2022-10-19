@@ -1,16 +1,14 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { makeEmojiList } from '../Components/MakeEmojiPage'
+import Tags from './Tags'
 
-function PostItem({userPost}) {
+function PostItem({articles}) {
 
-    const { id, title, date, minutes_to_read } = userPost;
-
-    console.log(userPost,'id')
-
+  // console.log(articles, 'articles')
+    const { id, title, date, minutes_to_read } = articles;
+    // console.log(title,'id')
     const emoji = makeEmojiList(minutes_to_read)
-
-    // console.log(post, 'post')
 
   return (
     <article className="mt-2 p-5 bg-white text-green rounded" key={id}>
@@ -20,9 +18,8 @@ function PostItem({userPost}) {
         <small>
             {date} . {emoji} {makeEmojiList} min read
         </small>
-
         {/* <p>{preview}</p> */}
-
+        <Tags />
     </article>
   )
 }

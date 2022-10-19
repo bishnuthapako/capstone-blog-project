@@ -47,7 +47,7 @@ function SignUp({setUser}) {
 
 
   return (
-    <Form onSubmit={handleFormSubmit}>
+  <Form onSubmit={handleFormSubmit}>
       <Form.Group className="mb-3" controlId="formBasicFullName">
         <Form.Control type="text" placeholder="Enter your Name" name="fullname" value={userDetails.fullname} onChange={handleInputForm} required/>
       </Form.Group>

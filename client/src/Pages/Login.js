@@ -7,65 +7,66 @@ function Login({onLogin}) {
 
   const navigate = useNavigate();
 
-//  const [error, setError]=useState([])
-  const [credentials, setCredientials]=useState({
-    username: "",
-    password: ""
-  })
+  const [username, setUsername]=useState("")
+  const [password, setPassword]=useState("")
+  const [errors, setErrors]=useState([])
+  const [isLoading, setIsLoading]=useState(false)
 
+
+  function handleSubmit(e){
+    e.preventDefault()
+    setIsLoading(true)
+    fetch("/login",{
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      }, 
+      body: JSON.stringify({username, password})
+    }).then((r)=>{
+      setIsLoading(false);
+      if(r.ok){
+        r.json().then((user)=>{
+          onLogin(user)
+          navigate("/")
+        });
+      } else{
+        r.json().then((error)=>setErrors(error.errors))
+      }
+    });
+  }
  
 
-async function handleSubmitForm(e){
-  e.preventDefault()
-
-  const config = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(credentials)
-  }
-
-
-  const res = await fetch("/login", config)
-  const data = await res.json()
-  // console.log(data, 'data')
-  onLogin(data)
-  if(res.ok){
-     navigate("/")
-  }
-//  navigate("/")
- }
-
- function handleFormControl(e){
-  // debugger;
-  const copyCredentials = {...credentials}
-  copyCredentials[e.target.name]=e.target.value
-  // debugger;
-
-  setCredientials(copyCredentials)
-// console.log(copyCredentials, 'copy')
-
- }
 
   return (
     <>
-        <Form onSubmit={handleSubmitForm} >
+  <Form onSubmit={handleSubmit} >
       <Form.Group className="mb-3" controlId="formBasicUsername">
-        <Form.Label>User Name</Form.Label>
-        <Form.Control type="username" placeholder="Enter username" onChange={handleFormControl} name="username" value={credentials.username} required/>
+        <Form.Label>username</Form.Label>
+        <Form.Control 
+        type="username" 
+        autoComplete='off'
+        placeholder="Enter username" 
+        value={username}
+        name="username"
+        onChange={(e)=>setUsername(e.target.value)} />
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formBasicPassword">
         <Form.Label>Password</Form.Label>
-        <Form.Control type="password" placeholder="Password" onChange={handleFormControl} name="password" value={credentials.password} required/>
+        <Form.Control 
+        type="password" 
+        placeholder="Password" 
+        autoComplete='current-password'
+        onChange={(e)=>setPassword(e.target.value)} 
+        name="password" 
+        value={password}/>
+
       </Form.Group>
 
       <Button variant="primary" type="submit">
-        Submit
+        {isLoading ? "Loading..": "Login"}
       </Button>
-    </Form>
-
+  </Form>
     </>
   )
 }
