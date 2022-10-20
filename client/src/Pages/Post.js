@@ -27,20 +27,20 @@ function Post({setPosts, posts, onUpdatePost, onDeletePost}) {
   const [{post, error, status}, setState]=useState(initialState)
   const { id } =useParams();
 
-  useEffect(()=>{
-      setState(initialState)
-        fetch(`/posts/${id}`).then((r)=>{
-        if(r.ok){
-          r.json().then((post)=>
-          setState({ post, error:null, status:"resolved" })
-          );
-        } else {
-          r.json().then((message)=>
-          setState({post: null, error: message.error, status: "rejected"})
-          );
-        }
-  });
-},[id]);
+//   useEffect(()=>{
+//       setState(initialState)
+//         fetch(`/posts/${id}`).then((r)=>{
+//         if(r.ok){
+//           r.json().then((post)=>
+//           setState({ post, error:null, status:"resolved" })
+//           );
+//         } else {
+//           r.json().then((message)=>
+//           setState({post: null, error: message.error, status: "rejected"})
+//           );
+//         }
+//   });
+// },[id]);
 
 if (status === "pending") return <h1>Loading...</h1>
 if (status==="rejected"){
@@ -69,8 +69,8 @@ const emojis = makeEmojiList(minutes_to_read)
             key={newPost.id}
             post_id={newPost.id}
             onUpdatePost={onUpdatePost}
-            setPosts={setPosts}
-            posts={posts}
+            // setPosts={setPosts}
+            // posts={posts}
             post={newPost}
             onDeletePost={onDeletePost}
     />)}

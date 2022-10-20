@@ -58,19 +58,25 @@ const handleAddPost = (post)=>{
 //   setPosts(updatedPosts)
 // }
 
-// function handleUpdatePost(updatedPost){
-//   const updatedPosts = posts.map((post)=>post.id ===updatedPost.id ? updatedPost : post);
-//   setPosts(updatedPosts)
-// }
+function handleUpdatePost(updatedPost){
+  const updatedPosts = posts.map((post)=>post.id ===updatedPost.id ? updatedPost : post);
+  setPosts(updatedPosts)
 
-const [isUpdate, setIsUpdate]=useState(false)
-
-const handleUpdatePost = (post)=>{
- let articles = posts
-articles.unshift(post)
- setPosts(articles)
- setIsUpdate(true)
+  // let updateArray = JSON.parse(JSON.stringify(posts))
+  // const findUser = updateArray.find((user)=>user.id===update.user_id)
+  // const newMessage = findUser.posts.map((post)=>{
+  //   if(post.id===update.id){
+  //     return update
+  //   }else{
+  //     return post
+  //   }
+  // })
+  // findUser.posts=newMessage
+  // setPosts(updateArray.map((user)=>user.id===findUser.id? findUser : user))
 }
+
+// const [isUpdate, setIsUpdate]=useState(false)
+
 
 // function handleUpdatePost(update){
 //   let updateArray = JSON.parse(JSON.stringify(posts))

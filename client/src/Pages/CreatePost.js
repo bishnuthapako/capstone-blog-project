@@ -46,11 +46,11 @@ function handleSubmit(e){
         value={title} 
         onChange={(e)=>setTitle(e.target.value)}/>
     </Form.Group>
-      <div className='tags-input'>
-      <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+      {/* <div className='tags-input'> */}
+      {/* <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
           <Form.Control type="text" placeholder="Add Tags" required />
       </Form.Group>
-      </div>
+      </div> */}
     
  
     

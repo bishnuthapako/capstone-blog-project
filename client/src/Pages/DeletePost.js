@@ -7,11 +7,13 @@ import Modal from 'react-bootstrap/Modal'
 import { useNavigate } from "react-router-dom";
 
 
-function DeletePost({post_id, post, onUpdatePost, posts, setPosts, onDeletePost}) {
-    const {id, minutes_to_read, date, title, content, author}=post
-    // console.log(date, 'date')
+function DeletePost({post_id, post, onUpdatePost, onDeletePost}) {
+    // const {id, minutes_to_read, date, title, content, author}=post
+    // console.log(post, 'post')
 
     // console.log(minutes_to_read, 'minutes')
+
+
 
     let navigate = useNavigate()
 
@@ -26,21 +28,36 @@ function handleDeleteClick(id){
     method: "DELETE"
 })
 onDeletePost(id)
-navigate("/")
+// navigate("/")
    
 
 }
 
+function handleInputUpdate(e){
+  // const copyPost = JSON.parse(JSON.stringify(post))
+  const copyPost = {...post}
 
-const [titles, setTitles]=useState(title)
-const [contents, setContents]=useState(content)
+  // copyPost.map((newPost)=>{
+  //   if(newPost.id === post_id){
+        // debugger
+        copyPost[e.target.name]=e.target.value
+  //       return newPost
+  //     } else{
+  //       return newPost
+  //     }
+  // })
+  onUpdatePost(copyPost)
+}
+
+// const [titles, setTitles]=useState(title)
+// const [contents, setContents]=useState(content)
 
 function updateSubmit(e){
 e.preventDefault();
 
 const formData = {
-  title: titles,
-  content: contents
+  title: post.title,
+  content: post.content
 }
 
 fetch(`/posts/${post.id}`,{
@@ -50,9 +67,22 @@ fetch(`/posts/${post.id}`,{
   },
   body: JSON.stringify(formData)
 }).then((res)=>res.json())
-.then((update)=>{
-  onUpdatePost(update)
-  navigate("/")
+.then((data)=>{
+  // console.log(data, 'data')
+  // const copyPost = JSON.parse(JSON.stringify(posts))
+  // copyPost.map((newPost)=>{
+  //   if(newPost.id === update.id){
+  //       // debugger
+  //       // newPost[e.target.name]=e.target.value
+  //       return update
+  //     } else{
+  //       return newPost
+  //     }
+  // })
+    onUpdatePost(data)
+
+  // onUpdatePost(update)
+  // navigate("/")
 })
 
 }
@@ -65,20 +95,19 @@ fetch(`/posts/${post.id}`,{
         <Modal.Body>
 
           <Form onSubmit={updateSubmit}>
-              <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                    <Form.Control as="textarea" rows={2} placeholder="New post title here" name="titles" value={titles} onChange={(e)=>setTitles(e.target.value)} required/>
-              </Form.Group>
-
-              <Form.Group className="mb-3 mt-3" controlId="exampleForm.ControlTextarea1">
-                  <Form.Control as="textarea" rows={5} placeholder="Write your post content here" name="contents" value={contents} onChange={(e)=>setContents(e.target.value)}  required/>
-              </Form.Group>
+             
+                    <input type="textarea" placeholder="New post title here" name="title" value={post.title} onChange={handleInputUpdate}  required/>
+   
+             
+                  <input type="textarea" placeholder="Write your post content here" name="content" value={post.content} onChange={handleInputUpdate} required/>
+            
                     <Button variant='secondary' className='mt-3' onClick={handleClose}>Close</Button>{' '}
                     <Button type='submit' variant='primary' className='mt-3' onClick={handleClose}>update</Button>
           </Form>
         </Modal.Body>
   </Modal> 
     <div className='post-section-edit'><button type="button" className="btn btn-link" onClick={handleShow}><FaEdit /></button></div>
-  <div className='post-section-delete'><button type="button" className="btn btn-link" onClick={()=>handleDeleteClick(post_id)}><MdDelete /></button></div>
+  <div className='post-section-delete'><button type="button" className="btn btn-link" onClick={()=>handleDeleteClick(post.id)}><MdDelete /></button></div>
   </>
   )
 }
