@@ -4,18 +4,18 @@ import { FaEdit } from "react-icons/fa";
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal'
-import { useNavigate } from "react-router-dom";
+
 
 
 function DeletePost({post_id, post, onUpdatePost, onDeletePost}) {
-    // const {id, minutes_to_read, date, title, content, author}=post
-    // console.log(post, 'post')
+    const {id, minutes_to_read, date, title, content, author}=post
+    console.log(post, 'tile')
 
     // console.log(minutes_to_read, 'minutes')
 
 
 
-    let navigate = useNavigate()
+
 
     const [show, setShow] = useState(false);
 
@@ -28,29 +28,19 @@ function handleDeleteClick(id){
     method: "DELETE"
 })
 onDeletePost(id)
-// navigate("/")
+
    
 
 }
 
 function handleInputUpdate(e){
-  // const copyPost = JSON.parse(JSON.stringify(post))
-  const copyPost = {...post}
 
-  // copyPost.map((newPost)=>{
-  //   if(newPost.id === post_id){
-        // debugger
+  const copyPost = {...post}
         copyPost[e.target.name]=e.target.value
-  //       return newPost
-  //     } else{
-  //       return newPost
-  //     }
-  // })
-  onUpdatePost(copyPost)
+      onUpdatePost(copyPost)
 }
 
-// const [titles, setTitles]=useState(title)
-// const [contents, setContents]=useState(content)
+
 
 function updateSubmit(e){
 e.preventDefault();
@@ -68,21 +58,9 @@ fetch(`/posts/${post.id}`,{
   body: JSON.stringify(formData)
 }).then((res)=>res.json())
 .then((data)=>{
-  // console.log(data, 'data')
-  // const copyPost = JSON.parse(JSON.stringify(posts))
-  // copyPost.map((newPost)=>{
-  //   if(newPost.id === update.id){
-  //       // debugger
-  //       // newPost[e.target.name]=e.target.value
-  //       return update
-  //     } else{
-  //       return newPost
-  //     }
-  // })
+
     onUpdatePost(data)
 
-  // onUpdatePost(update)
-  // navigate("/")
 })
 
 }

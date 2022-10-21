@@ -1,6 +1,6 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React, {useEffect, useState, createContext} from 'react';
+import React, { useEffect, useState } from 'react';
 import { Routes, Route } from "react-router-dom";
 import SignUp from './Pages/SignUp';
 import Login from './Pages/Login';
@@ -8,13 +8,12 @@ import NavBar from './Pages/NavBar';
 import Home from './Pages/Home';
 import Post from './Pages/Post';
 import CreatePost from './Pages/CreatePost';
+import { UserContext } from "./UserContext"
 
-
-
-export const UsersContext = createContext();
 
 function App() {
 
+  
   const [user, setUser]=useState(null)
 
 
@@ -26,7 +25,6 @@ function App() {
     });
   },[])
 
-  // if (!user) return <Login onLogin={setUser} />
 
   const [posts, setPosts]=useState([])
   // console.log(posts, 'post')
@@ -36,9 +34,9 @@ useEffect(()=>{
   .then(setPosts)
 },[])
 
-// function handleAddPost(newPost){
-//   setPosts((posts)=>[...posts, newPost])
-// }
+function handleAddPost(newPost){
+  setPosts((posts)=>[...posts, newPost])
+}
 
 // function handleAddPost(newMessage){
 // let copyMessage = JSON.parse(JSON.stringify(posts))
@@ -46,55 +44,28 @@ useEffect(()=>{
 // setPosts(copyMessage)
 // }
 
-const handleAddPost = (post)=>{
-  setPosts([...posts, post])
-}
-
-
-
-
-// function handleDeletePost(postToDelete){
-//   const updatedPosts = posts.filter((post)=>post.id !==postToDelete.id);
-//   setPosts(updatedPosts)
+// const handleAddPost = (post)=>{
+//   setPosts([...posts, post])
 // }
+
+
+
+
+function handleDeletePost(postToDelete){
+  const updatedPosts = posts.filter((post)=>post.id !==postToDelete.id);
+  setPosts(updatedPosts)
+}
 
 function handleUpdatePost(updatedPost){
   const updatedPosts = posts.map((post)=>post.id ===updatedPost.id ? updatedPost : post);
   setPosts(updatedPosts)
 
-  // let updateArray = JSON.parse(JSON.stringify(posts))
-  // const findUser = updateArray.find((user)=>user.id===update.user_id)
-  // const newMessage = findUser.posts.map((post)=>{
-  //   if(post.id===update.id){
-  //     return update
-  //   }else{
-  //     return post
-  //   }
-  // })
-  // findUser.posts=newMessage
-  // setPosts(updateArray.map((user)=>user.id===findUser.id? findUser : user))
 }
 
-// const [isUpdate, setIsUpdate]=useState(false)
-
-
-// function handleUpdatePost(update){
-//   let updateArray = JSON.parse(JSON.stringify(posts))
-//   const findUser = updateArray.find((user)=>user.id===update.user_id)
-//   const newMessage = findUser.posts.map((post)=>{
-//     if(post.id===update.id){
-//       return update
-//     }else{
-//       return post
-//     }
-//   })
-//   findUser.posts=newMessage
-//   setPosts(updateArray.map((user)=>user.id===findUser.id? findUser : user))
-// }
 
   return (
     <>
-    <UsersContext.Provider value={{user}}>
+    <UserContext.Provider value={{user, setUser}}>
         
     <NavBar user={user} setUser={setUser}/>
   <div className='container-fluid'>
@@ -102,7 +73,7 @@ function handleUpdatePost(updatedPost){
 <div className="container">
                 <Routes>
                     <Route exact path="/" element={<Home posts={posts}/>} />
-                    <Route exact path="/posts/:id" element={ <Post onDeletePost={handleUpdatePost} setPosts={setPosts} onUpdatePost={handleUpdatePost} posts={posts} /> }/>
+                    <Route exact path="/posts/:id" element={ <Post onDeletePost={handleDeletePost} onUpdatePost={handleUpdatePost} posts={posts} /> }/>
                     <Route exact path="/post" element={<CreatePost handleAddPost={handleAddPost} user={user} setUser={setUser}/>} /> 
                     <Route exact path="/signup" element={<SignUp setUser={setUser}/>} /> 
                     <Route exact path="/login" element={<Login onLogin={setUser} />} />
@@ -110,7 +81,7 @@ function handleUpdatePost(updatedPost){
       </div>
     </div>
   </div>
-</UsersContext.Provider>
+</UserContext.Provider>
     </>
   );
 }
