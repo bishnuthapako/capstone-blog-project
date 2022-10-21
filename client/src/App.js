@@ -15,6 +15,7 @@ function App() {
 
   
   const [user, setUser]=useState(null)
+  const [currentPost, setCurrentPost]=useState({id:0, title: "", content: "", date: "", comments: [], post_tags: [], tags: [], minutes_to_read: 0, author: ""})
 
 
   useEffect(()=>{
@@ -65,14 +66,14 @@ function handleUpdatePost(updatedPost){
 
   return (
     <>
-    <UserContext.Provider value={{user, setUser}}>
+    <UserContext.Provider value={{user, setUser, posts, setPosts, currentPost, setCurrentPost}}>
         
-    <NavBar user={user} setUser={setUser}/>
+    <NavBar/>
   <div className='container-fluid'>
     <div className='container'>
 <div className="container">
                 <Routes>
-                    <Route exact path="/" element={<Home posts={posts}/>} />
+                    <Route exact path="/" element={<Home posts={posts} setCurrentPost={setCurrentPost}/>} />
                     <Route exact path="/posts/:id" element={ <Post onDeletePost={handleDeletePost} onUpdatePost={handleUpdatePost} posts={posts} /> }/>
                     <Route exact path="/post" element={<CreatePost handleAddPost={handleAddPost} user={user} setUser={setUser}/>} /> 
                     <Route exact path="/signup" element={<SignUp setUser={setUser}/>} /> 

@@ -1,8 +1,10 @@
 import React from 'react'
 import PostItem from './PostItem'
 
-function Home({posts}) {
+
+function Home({posts, setCurrentPost}) {
  
+
 
   return (
     <>

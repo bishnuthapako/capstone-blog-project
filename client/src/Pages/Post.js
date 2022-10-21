@@ -1,19 +1,25 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState, useContext} from 'react'
 import { makeEmojiList } from '../Components/MakeEmojiPage'
 import Comments from './Comments';
 import CreateComments from './CreateComments';
-import { useParams } from 'react-router-dom'
+// import { useParams } from 'react-router-dom'
 import DeletePost from './DeletePost';
-// import EditForm from './EditForm';
+import {UserContext} from "../UserContext"
 
 
-const initialState={
-  post: null,
-  error: null,
-  status: "pending"
-}
 
-function Post({currentPost, posts, onUpdatePost, onDeletePost}) {
+// const initialState={
+//   post: null,
+//   error: null,
+//   status: "pending"
+// }
+
+function Post({onUpdatePost, onDeletePost}) {
+
+// const {currentPost}=useContext(UserContext)
+
+  const {posts, setPosts, currentPost} = useContext(UserContext)
+  console.log(currentPost, 'current')
    const [comment, setComment]=useState([])
 
         useEffect(()=>{
@@ -24,41 +30,43 @@ function Post({currentPost, posts, onUpdatePost, onDeletePost}) {
           });},[])
 
 
-  
+  // const [{error, status}, setState]=useState(initialState)
 
-  const [{post, error, status}, setState]=useState(initialState)
-  const { id } =useParams();
-
-  useEffect(()=>{
-      setState(initialState)
-        fetch(`/posts/${id}`).then((r)=>{
-        if(r.ok){
-          r.json().then((post)=>
-          setState({ post, error:null, status:"resolved" })
-          );
-        } else {
-          r.json().then((message)=>
-          setState({post: null, error: message.error, status: "rejected"})
-          );
-        }
-  });
-},[id]);
-
-if (status === "pending") return <h1>Loading...</h1>
-if (status==="rejected"){
-  if(error === "Maximum pageview limit reached"){
-    return <h3>Payroll</h3>;
-  }else{
-    return <h3>{error}</h3>
-  }
-}
+// currentPost
 
 
+  // const { id } =useParams();
 
-const {title, author, date, content, minutes_to_read }=post;
+//   useEffect(()=>{
+//       setState(initialState)
+//         fetch(`/posts/${id}`).then((r)=>{
+//         if(r.ok){
+//           r.json().then((post)=>
+//           setState({ error:null, status:"resolved" })
+//           );
+//         } else {
+//           r.json().then((message)=>
+//           setState({post: null, error: message.error, status: "rejected"})
+//           );
+//         }
+//   });
+// },[id]);
+
+// if (status === "pending") return <h1>Loading...</h1>
+// if (status==="rejected"){
+//   if(error === "Maximum pageview limit reached"){
+//     return <h3>Payroll</h3>;
+//   }else{
+//     return <h3>{error}</h3>
+//   }
+// }
+
+
+
+// const {title, author, date, content, minutes_to_read }=posts;
 const emojis = makeEmojiList("minutes_to_read")
 
-
+console.log(currentPost, "current")
   return (
     <>
 <div className="container-fluid">
@@ -67,8 +75,7 @@ const emojis = makeEmojiList("minutes_to_read")
         <img src="https://www.w3schools.com/howto/img_avatar.png" alt='My Awesome Image' className='post-avatar'/>
       </div>
       <div className='author-pic'>
-       
-            <h3>{author}</h3>
+            <h3>{currentPost.author}</h3>
       </div>
     {posts.map((newPost)=><DeletePost
             key={newPost.id}
@@ -82,13 +89,13 @@ const emojis = makeEmojiList("minutes_to_read")
     />)}
     
     <small className='min-read'>
-          <p>{date} . {emojis} {minutes_to_read} min read</p>
+          <p>{currentPost.date} . {emojis} {currentPost.minutes_to_read} min read</p>
     </small>
    
       <div className='p-5 posts'>
               <hr/>
-              <h1>{title}</h1>
-              <p>{content}</p>
+              <h1>{currentPost.title}</h1> 
+              <p>{currentPost.content}</p>
       </div>
    
     </article>
